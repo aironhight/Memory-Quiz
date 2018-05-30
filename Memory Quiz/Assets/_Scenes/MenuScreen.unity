@@ -967,7 +967,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GAME NAME
+  m_Text: Memory Quiz
 --- !u!222 &1284403648
 CanvasRenderer:
   m_ObjectHideFlags: 0
