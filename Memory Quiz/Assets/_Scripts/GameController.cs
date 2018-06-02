@@ -7,20 +7,22 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 
-	[SerializeField] public GameObject GameOverPanel;
-	[SerializeField] public GameObject ImagePanel;
+	[SerializeField] public GameObject roundOverPanel;
 	[SerializeField] public Text timeText;
 	[SerializeField] public GameObject questionPanel;
 	[SerializeField] public Text questionText;
 	[SerializeField] public Text scoreText;
-	[SerializeField] public Image imgPos;
 	[SerializeField] public SimpleObjectPool buttonPool;
 	[SerializeField] public Transform answerButtonParent;
 	[SerializeField] public Text totalScore;
+	[SerializeField] private Image questionImage;
+	[SerializeField] public Text hint;
+	private float imageDisplayTime;
 	private DataController dataController;
 	private RoundData currRound;
 	private float startTime;
 	private QuestionData[] questions;
+	private int image;
 	private int score;
 	private bool isInRound;
 	private float timeElapsed;
@@ -28,31 +30,66 @@ public class GameController : MonoBehaviour {
 	private Image img;
 	private List<GameObject> buttons;
 	private float total;
+	private bool showImage;
+	private int round;
 
-	// Use this for initialization
+	void Awake(){
+		
+	}
+
 	void Start () {
+		round = 0;
+
 		dataController = FindObjectOfType<DataController>();
-		currRound = dataController.getCurrentRoundData();
+		currRound = dataController.getCurrentRoundData(round);
+		image = currRound.image;
 		questions = currRound.questions;
 		buttons = new List<GameObject>();
-		imgPos = GetComponent<Image>();
 
+		if(questionImage != null)
+		{
+			questionImage.sprite = Resources.Load<Sprite>("Images/" + image);
+		}
+
+		imageDisplayTime = 10.0f;
 		score = 0;
-		startTime = Time.time;
+		startTime = 0;
 		timeElapsed = 0;
 		questionIndx = 0;
 		total = 0;
 
-		SetupQuestion();
-		isInRound = true;
+		showImage = true;
+		isInRound = false;
+
+		ShowImage();
 	}
 	
-	// Update is called once per frame
+	
+	private void ShowImage(){
+		imageDisplayTime -= Time.deltaTime;
+		timeText.text = "Time left: " + imageDisplayTime.ToString("0.0");
+		if(imageDisplayTime < 0)
+		{
+			hint.enabled = false;
+			showImage = false;
+			questionImage.enabled = false;
+			SetupQuestion();
+			isInRound = true;
+			startTime = Time.time;
+		}
+		
+	}
+
 	void Update () {
 		if(isInRound)
 		{
 			timeElapsed = Time.time - startTime;
-			timeText.text = timeElapsed.ToString("0.0");
+			timeText.text = "Time passed:" + timeElapsed.ToString("0.0");
+		}
+
+		if(showImage)
+		{
+			ShowImage();
 		}
 	}
 
@@ -64,12 +101,6 @@ public class GameController : MonoBehaviour {
 			buttons.RemoveAt(0);
 		}
 	}
-
-
-	// private void SetupImage(){
-	// 	QuestionData qData = questions[questionIndx];
-	// 	imgPos.GetComponent<Renderer>().overrideSprite = img;
-	// }
 
 	private void SetupQuestion(){
 		ClearAnswers();
@@ -110,11 +141,20 @@ public class GameController : MonoBehaviour {
 		isInRound = false;
 		total = score - (timeElapsed / 10);
 		questionPanel.SetActive(false);
-		GameOverPanel.SetActive(true);
+		roundOverPanel.SetActive(true);
 		totalScore.text = "Total Score: " + total.ToString("0.0");
 	}
 
 	public void ReturnToMenu(){
 		SceneManager.LoadScene("MenuScreen");
+	}
+
+	public void UploadScore()
+	{
+		// icko da zapovqda
+	}
+
+	public void NextRound(){
+		// to be done
 	}
 }
