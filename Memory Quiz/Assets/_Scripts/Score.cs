@@ -5,6 +5,7 @@ using UnityEngine;
 public class Score : MonoBehaviour {
 
 	public int currentScore;
+	private DBManager db;
 
 
 	// Use this for initialization
@@ -21,8 +22,8 @@ public class Score : MonoBehaviour {
 
 	}
 
-	public Score[] getTopScores() {
-		return null;
+	public int[] getTopFiveScore() {
+		return db.getTopFiveScores();
 	}
 
 	public void addScore (int score) {
