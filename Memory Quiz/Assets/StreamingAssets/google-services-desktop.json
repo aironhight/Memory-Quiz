@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "634933738526",
+    "firebase_url": "https://memory-quiz.firebaseio.com",
+    "project_id": "memory-quiz",
+    "storage_bucket": "memory-quiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634933738526:android:77c731d8a123808e",
+        "android_client_info": {
+          "package_name": "com.memoryquiz.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634933738526-stmkn0pa94ilm1a89ijai9bq4hgqd1j5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "634933738526-stmkn0pa94ilm1a89ijai9bq4hgqd1j5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUdlbhhT01Wi-HbBwUVWdHA9D61_l993Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
