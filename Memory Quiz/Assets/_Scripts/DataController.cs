@@ -13,8 +13,8 @@ public class DataController : MonoBehaviour {
 		SceneManager.LoadScene("MenuScreen");
 	}
 
-	public RoundData getCurrentRoundData(){
-		return allRoundData[0];
+	public RoundData getCurrentRoundData(int round){
+		return allRoundData[round];
 	}
 
 	

@@ -141,54 +141,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allRoundData:
-  - name: Round 1
-    pointsAddedForCorrectAnswer: 15
+  - image: 1
+    name: Round 1
+    pointsAddedForCorrectAnswer: 5
     questions:
-    - questionImage: {fileID: 1473107732}
-      questionText: Who is this?
+    - questionText: Which of the following wasn't in the picture?
       answers:
-      - answerText: You
+      - answerText: Sports car
         isCorrect: 0
-      - answerText: Me
+      - answerText: Snow
         isCorrect: 0
-      - answerText: I don't know
+      - answerText: Jon Snow
         isCorrect: 1
-      - answerText: No one
-        isCorrect: 1
-    - questionImage: {fileID: 1473107732}
-      questionText: Do you like SEP?
+      - answerText: Trees
+        isCorrect: 0
+    - questionText: The car was?
       answers:
-      - answerText: No
-        isCorrect: 1
-      - answerText: ofc No
-        isCorrect: 1
-    - questionImage: {fileID: 1473107732}
-      questionText: Are you enjoying your life?
-      answers:
-      - answerText: yes
+      - answerText: White
         isCorrect: 0
-      - answerText: no
-        isCorrect: 1
-      - answerText: I don't know
+      - answerText: Green
         isCorrect: 0
-    - questionImage: {fileID: 1473107732}
-      questionText: The images still not working?
-      answers:
-      - answerText: no
+      - answerText: Silver
+        isCorrect: 0
+      - answerText: Black
         isCorrect: 1
-      - answerText: no
-        isCorrect: 1
-    - questionImage: {fileID: 1473107732}
-      questionText: Testing
+      - answerText: Transparent
+        isCorrect: 0
+    - questionText: Did it have a spoiler?
       answers:
       - answerText: Yes
         isCorrect: 1
-      - answerText: W/e
+      - answerText: No
+        isCorrect: 0
+    - questionText: You could see the sun in the picture?
+      answers:
+      - answerText: Yes
+        isCorrect: 0
+      - answerText: No
         isCorrect: 1
-      - answerText: kurwa
+    - questionText: It was a new car?
+      answers:
+      - answerText: Yes
         isCorrect: 1
-      - answerText: No one
-        isCorrect: 1
+      - answerText: No
+        isCorrect: 0
 --- !u!4 &603415470
 Transform:
   m_ObjectHideFlags: 0
