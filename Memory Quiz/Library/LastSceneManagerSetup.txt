@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/Persistent.unity
+- path: Assets/_Scenes/DBTestingScene.unity
   isLoaded: 1
   isActive: 1
