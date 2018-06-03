@@ -22,8 +22,13 @@ public class Score : MonoBehaviour {
 
 	}
 
-	public int[] getTopFiveScore() {
-		return db.getTopFiveScores();
+	public void requestTopFiveScores() {
+		db.getTopFiveScores();
+	}
+
+	public void inflateScoreBoard(int[] topScores) {
+		//this method gets called by the DBManager, sending an array with the top 5 scores.
+		
 	}
 
 	public void addScore (int score) {
