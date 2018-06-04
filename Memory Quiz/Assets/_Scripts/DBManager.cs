@@ -9,7 +9,7 @@ public class DBManager : MonoBehaviour {
 
 	private DatabaseReference dbr;
 	private int[] topScores;
-	private Score scoreInstance;
+	 public Score scoreInstance;
 
 	// Use this for initialization
 	void Start () {
@@ -18,68 +18,24 @@ public class DBManager : MonoBehaviour {
 
 		//Get the scores reference location of the database.
 		dbr = FirebaseDatabase.DefaultInstance.GetReference("scores");
-		//getTopFiveScores();
-
-		int[] scores = getTopFiveScores();
-
-		bubbleSort(scores);
-
-		// for(int i=0; i<scores.Length; i++) {
-		// 			Debug.Log("The current score of top score #" + (i+1) + " is :" + scores[i]);
-		// }
-		
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
+		scoreInstance = GetComponent<Score>();
 	}
 
+	//Calls score board inflating methond from the Score class.
 	private void displayScore() {
 		bubbleSort(topScores);
-		for(int i=0; i<topScores.Length; i++) {
-			Debug.Log("The current score of top score #" + (i+1) + " is :" + topScores[i]);
-		}
 
 		scoreInstance.inflateScoreBoard(topScores);
-
-		//Here you call the method that shows the score / inflates the scoreboard.
 	}
 
-	//Returns the top 3 scores as an int array (index 0 is the highest score, index 1 the second highes, etc.)
-	//If the query fails it returns null.
+	//Starts an Async task, requesting the top 5 scores from the database.
+	//Calls displayScore() if the task is successful 
 	public void getTopFiveScores() {
-		// dbr.OrderByChild("score").LimitToLast(5).GetValueAsync().ContinueWith(task => {
-		// 	if (task.IsFaulted) {
-		// 		Debug.Log("FAILED TASK");
-		// 	}
-		// 	else if (task.IsCompleted) {
-		// 		Dictionary<string, object> results = (Dictionary<string, object>) task.Result.Value;
-		// 		int index = scores.Length-1;
-		// 		Debug.Log("DO TUK DOBRE");
-		// 		foreach(var res in results) {
-		// 			Debug.Log(res.Value.ToString());
-		// 			// scores[index] = int.Parse(res.Value.ToString());
-		// 			// index--;
-		// 		}
-		// 		for(int i=0; i<scores.Length; i++) {
-		//  			Debug.Log("The current score of top score #" + (i+1) + " is :" + scores[i]);
-		//  		}
-		// 	}
-		// });
-
-		dbr.OrderByChild("score").LimitToLast(5).GetValueAsync().ContinueWith(task => {
+		dbr.OrderByChild("score").LimitToLast(5).GetValueAsync().ContinueWith(task => { //Gets the top 5 scores from the database
 			if (task.IsFaulted) {
-				Debug.Log("FAILED TASK");
+				Debug.Log("Top scores request failed.");
 			}
 			else if (task.IsCompleted) {
-
-				// DataSnapshot snapShot = task.Result;
-
-				// foreach(var dataChild in snapShot.Children) {
-				// 	Debug.Log(dataChild.GetValue(false));
-				// }
 				int[] scores = new int[5];
 
 				int index = scores.Length-1;
@@ -91,25 +47,8 @@ public class DBManager : MonoBehaviour {
 						index--;
 					}
 				}
-
-				// Dictionary<string, object> results = (Dictionary<string, object>) task.Result.Value;
-				// int index = scores.Length-1;
-				// foreach(var res in results) {
-				// 	scores[index] = int.Parse(res.Value.ToString());
-				// 	index--;
-				// }
-
-				// scores[0] = int.Parse(results["one"].ToString());
-				// scores[1] = int.Parse(results["two"].ToString());
-				// scores[2] = int.Parse(results["three"].ToString());
-				// scores[3] = int.Parse(results["four"].ToString());
-				// scores[4] = int.Parse(results["five"].ToString());
-
-				// for(int i=0; i<scores.Length; i++) {
-				// 	Debug.Log("The current score of top score #" + (i+1) + " is :" + scores[i]);
-				// }
 				topScores = scores;
-				displayScore();
+				displayScore(); //
 			}
 		});
 	}
@@ -118,32 +57,36 @@ public class DBManager : MonoBehaviour {
 		Debug.Log("Pushing the score " + score + " to the database.");
  		DatabaseReference postRef = dbr.Push().Child("score");
 		postRef.SetValueAsync(score);
-
 	}
 
-	public void fillDBWithRandomStuff() {
-		DatabaseReference postRef = dbr.Push().Child("score");
-		postRef.SetValueAsync(17);
-		postRef = dbr.Push().Child("score");
-		postRef.SetValueAsync(14);
-		postRef = dbr.Push().Child("score");
-		postRef.SetValueAsync(18);
-		postRef = dbr.Push().Child("score");
-		postRef.SetValueAsync(11);
-		postRef = dbr.Push().Child("score");
-		postRef.SetValueAsync(100);
-		postRef = dbr.Push().Child("score");
-		postRef.SetValueAsync(188);
-		postRef = dbr.Push().Child("score");
-		postRef.SetValueAsync(1);
-		postRef = dbr.Push().Child("score");
-		postRef.SetValueAsync(9);
-		postRef = dbr.Push().Child("score");
-		postRef.SetValueAsync(28);
-	}
+	//Implemented for testing purposes
+	// public void fillDBWithRandomStuff() {
+	// 	DatabaseReference postRef = dbr.Push().Child("score");
+	// 	postRef.SetValueAsync(17);
+	// 	postRef = dbr.Push().Child("score");
+	// 	postRef.SetValueAsync(14);
+	// 	postRef = dbr.Push().Child("score");
+	// 	postRef.SetValueAsync(18);
+	// 	postRef = dbr.Push().Child("score");
+	// 	postRef.SetValueAsync(11);
+	// 	postRef = dbr.Push().Child("score");
+	// 	postRef.SetValueAsync(100);
+	// 	postRef = dbr.Push().Child("score");
+	// 	postRef.SetValueAsync(188);
+	// 	postRef = dbr.Push().Child("score");
+	// 	postRef.SetValueAsync(1);
+	// 	postRef = dbr.Push().Child("score");
+	// 	postRef.SetValueAsync(9);
+	// 	postRef = dbr.Push().Child("score");
+	// 	postRef.SetValueAsync(28);
+	// }
 
+	//Sorts an integer array in decreasing order
 	private void bubbleSort(int[] arr) {
-		bool swops;
+		if(arr == null && arr.Length == 1) {
+			return;
+		}
+		bool swops; //boolean showing if we took any actions during the last iteration of the array.
 		do{
 			swops = false;
 			for(int i=(arr.Length-1); i > 0; i--) {
