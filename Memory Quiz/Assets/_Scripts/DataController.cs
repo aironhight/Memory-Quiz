@@ -5,8 +5,30 @@ using UnityEngine.SceneManagement;
 
 public class DataController : MonoBehaviour {
 
+	private int round = 0;
+	private float score;
+	// public float Score { get; set; }
 	public RoundData[] allRoundData;
-	// Use this for initialization
+	
+
+	public void finishRound(){
+		round++;
+	}
+
+	public int getCurrentRound(){
+		if (round > allRoundData.Length)
+			round = -1;
+		return round;
+	}
+
+	public void addScore(float newScore){
+		score += newScore;
+	}
+
+	public float getTotalScore(){
+		return score;
+	}
+
 	void Start () {
 		DontDestroyOnLoad(gameObject);
 
@@ -17,8 +39,6 @@ public class DataController : MonoBehaviour {
 		return allRoundData[round];
 	}
 
-	
-	// Update is called once per frame
 	void Update () {
 		
 	}

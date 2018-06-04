@@ -23,13 +23,13 @@ public class GameController : MonoBehaviour {
 	private float startTime;
 	private QuestionData[] questions;
 	private int image;
-	private int score;
+	private float score;
 	private bool isInRound;
 	private float timeElapsed;
 	private int questionIndx;
 	private Image img;
 	private List<GameObject> buttons;
-	private float total;
+	private float totalRoundScore;
 	private bool showImage;
 	private int round;
 
@@ -38,13 +38,17 @@ public class GameController : MonoBehaviour {
 	}
 
 	void Start () {
-		round = 0;
-
 		dataController = FindObjectOfType<DataController>();
+		round = dataController.getCurrentRound();
 		currRound = dataController.getCurrentRoundData(round);
 		image = currRound.image;
 		questions = currRound.questions;
 		buttons = new List<GameObject>();
+
+		if(round == -1)
+		{
+			Debug.Log("no next round");
+		}
 
 		if(questionImage != null)
 		{
@@ -56,7 +60,7 @@ public class GameController : MonoBehaviour {
 		startTime = 0;
 		timeElapsed = 0;
 		questionIndx = 0;
-		total = 0;
+		totalRoundScore = 0;
 
 		showImage = true;
 		isInRound = false;
@@ -137,12 +141,35 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	private float timeScore(){
+		int timePassed = (int)timeElapsed;
+
+		Debug.Log(timePassed.ToString());
+
+		if(timePassed < 5)
+			return 100.0f;
+		else if(timePassed < 8)
+			return 60.0f;
+		else if(timePassed < 15)
+			return 30.0f;
+		else if(timePassed < 30)
+			return 10.0f;
+		return 0f;
+	}
 	public void EndRound(){
+		float tScore = timeScore();
 		isInRound = false;
-		total = score - (timeElapsed / 10);
+		totalRoundScore = score + tScore;
+
+		Debug.Log(totalRoundScore.ToString("0.0"));
+
+		dataController.addScore(totalRoundScore);
 		questionPanel.SetActive(false);
 		roundOverPanel.SetActive(true);
-		totalScore.text = "Total Score: " + total.ToString("0.0");
+
+		Debug.Log(dataController.getTotalScore());
+
+		totalScore.text = "Total Score: " + dataController.getTotalScore();
 	}
 
 	public void ReturnToMenu(){
@@ -155,6 +182,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void NextRound(){
-		// to be done
+		dataController.finishRound();
+		SceneManager.LoadScene("Game");
 	}
 }
