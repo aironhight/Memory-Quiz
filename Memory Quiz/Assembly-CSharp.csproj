@@ -53,10 +53,11 @@
   <ItemGroup>
      <Compile Include="Assets\_Scripts\AnswerButton.cs" />
      <Compile Include="Assets\_Scripts\AnswerData.cs" />
+     <Compile Include="Assets\_Scripts\ColorChange.cs" />
      <Compile Include="Assets\_Scripts\DataController.cs" />
      <Compile Include="Assets\_Scripts\DBManager.cs" />
      <Compile Include="Assets\_Scripts\GameController.cs" />
-     <Compile Include="Assets\_Scripts\Img.cs" />
+     <Compile Include="Assets\_Scripts\GameData.cs" />
      <Compile Include="Assets\_Scripts\MenuController.cs" />
      <Compile Include="Assets\_Scripts\QuestionData.cs" />
      <Compile Include="Assets\_Scripts\RoundData.cs" />
