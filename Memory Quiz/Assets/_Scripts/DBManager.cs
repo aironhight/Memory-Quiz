@@ -59,28 +59,6 @@ public class DBManager : MonoBehaviour {
 		postRef.SetValueAsync(score);
 	}
 
-	//Implemented for testing purposes
-	// public void fillDBWithRandomStuff() {
-	// 	DatabaseReference postRef = dbr.Push().Child("score");
-	// 	postRef.SetValueAsync(17);
-	// 	postRef = dbr.Push().Child("score");
-	// 	postRef.SetValueAsync(14);
-	// 	postRef = dbr.Push().Child("score");
-	// 	postRef.SetValueAsync(18);
-	// 	postRef = dbr.Push().Child("score");
-	// 	postRef.SetValueAsync(11);
-	// 	postRef = dbr.Push().Child("score");
-	// 	postRef.SetValueAsync(100);
-	// 	postRef = dbr.Push().Child("score");
-	// 	postRef.SetValueAsync(188);
-	// 	postRef = dbr.Push().Child("score");
-	// 	postRef.SetValueAsync(1);
-	// 	postRef = dbr.Push().Child("score");
-	// 	postRef.SetValueAsync(9);
-	// 	postRef = dbr.Push().Child("score");
-	// 	postRef.SetValueAsync(28);
-	// }
-
 	//Sorts an integer array in decreasing order
 	private void bubbleSort(int[] arr) {
 		if(arr == null && arr.Length == 1) {
