@@ -9,7 +9,7 @@ public class DBManager : MonoBehaviour {
 
 	private DatabaseReference dbr;
 	private int[] topScores;
-	 public Score scoreInstance;
+	private Score scoreInstance;
 
 	// Use this for initialization
 	void Start () {
