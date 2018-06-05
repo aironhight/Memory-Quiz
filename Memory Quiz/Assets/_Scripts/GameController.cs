@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
 	[SerializeField] public Text totalScore;
 	[SerializeField] private Image questionImage;
 	[SerializeField] public Text hint;
+	[SerializeField] public Text[] topScoreTextFields = new Text[5];
 	private float imageDisplayTime;
 	private DataController dataController;
 	private RoundData currRound;
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour {
 	private float totalRoundScore;
 	private bool showImage;
 	private int round;
+	private Score scoreInstance;
 
 	void Awake(){
 		
@@ -44,6 +46,7 @@ public class GameController : MonoBehaviour {
 		image = currRound.image;
 		questions = currRound.questions;
 		buttons = new List<GameObject>();
+		scoreInstance = GetComponent<Score>();
 
 		if(round == -1)
 		{
@@ -69,7 +72,7 @@ public class GameController : MonoBehaviour {
 	}
 	
 	
-	private void ShowImage(){
+	private void ShowImage() {
 		imageDisplayTime -= Time.deltaTime;
 		timeText.text = "Time left: " + imageDisplayTime.ToString("0.0");
 		if(imageDisplayTime < 0)
@@ -97,7 +100,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	private void ClearAnswers(){
+	private void ClearAnswers() {
 		while(buttons.Count > 0)
 		{
 			buttonPool.ReturnObject(buttons[0]);
@@ -106,7 +109,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	private void SetupQuestion(){
+	private void SetupQuestion() {
 		ClearAnswers();
 
 		QuestionData qData = questions[questionIndx];
@@ -122,7 +125,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	public void Answer(bool isCorrect){
+	public void Answer(bool isCorrect) {
 		if(isCorrect)
 		{
 			score += currRound.pointsAddedForCorrectAnswer;
@@ -141,7 +144,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	private float timeScore(){
+	private float timeScore() {
 		int timePassed = (int)timeElapsed;
 
 		Debug.Log(timePassed.ToString());
@@ -156,7 +159,7 @@ public class GameController : MonoBehaviour {
 			return 10.0f;
 		return 0f;
 	}
-	public void EndRound(){
+	public void EndRound() {
 		float tScore = timeScore();
 		isInRound = false;
 		totalRoundScore = score + tScore;
@@ -172,17 +175,27 @@ public class GameController : MonoBehaviour {
 		totalScore.text = "Total Score: " + dataController.getTotalScore();
 	}
 
-	public void ReturnToMenu(){
+	public void ReturnToMenu() {
 		SceneManager.LoadScene("MenuScreen");
 	}
 
-	public void UploadScore()
-	{
-		// icko da zapovqda
+	public void UploadScore() {
+		scoreInstance.postScore((int)score);
 	}
 
-	public void NextRound(){
+	public void NextRound() {
 		dataController.finishRound();
 		SceneManager.LoadScene("Game");
 	}
+
+	public void RequestScoreBoardUpdate() {
+		scoreInstance.requestTopFiveScores();
+	}
+
+	public void InflateScoreBoard(int[] topScores) {
+		for(int i=0; i<topScores.Length; i++) {
+			topScoreTextFields[i].text = i + ". " + topScores[i];
+		}
+	}
+
 }

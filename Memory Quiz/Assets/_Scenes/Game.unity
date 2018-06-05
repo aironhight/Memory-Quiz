@@ -712,7 +712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &861834042
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2177,6 +2177,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1591837542}
   - component: {fileID: 1591837541}
+  - component: {fileID: 1591837544}
+  - component: {fileID: 1591837543}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2205,6 +2207,12 @@ MonoBehaviour:
   totalScore: {fileID: 2038977119}
   questionImage: {fileID: 1104117131}
   hint: {fileID: 1012653727}
+  topScoreTextFields:
+  - {fileID: 707763343}
+  - {fileID: 1677627508}
+  - {fileID: 963892265}
+  - {fileID: 1147096237}
+  - {fileID: 803002522}
 --- !u!4 &1591837542
 Transform:
   m_ObjectHideFlags: 0
@@ -2218,6 +2226,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1591837543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1591837540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0173f1b26bdc61640993e2773c02be94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1591837544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1591837540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a5446e7f34e5640b63f4b888f8d4ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScore: 0
 --- !u!1 &1677627506
 GameObject:
   m_ObjectHideFlags: 0
