@@ -122,6 +122,8 @@ GameObject:
   m_Component:
   - component: {fileID: 603415470}
   - component: {fileID: 603415469}
+  - component: {fileID: 603415472}
+  - component: {fileID: 603415471}
   m_Layer: 0
   m_Name: DataController
   m_TagString: Untagged
@@ -140,101 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7a32e37373c02408ecd53d9b78036f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allRoundData:
-  - image: 1
-    name: Round 1
-    pointsAddedForCorrectAnswer: 5
-    questions:
-    - questionText: Which of the following wasn't in the picture?
-      answers:
-      - answerText: Sports car
-        isCorrect: 0
-      - answerText: Snow
-        isCorrect: 0
-      - answerText: Jon Snow
-        isCorrect: 1
-      - answerText: Trees
-        isCorrect: 0
-    - questionText: The car was?
-      answers:
-      - answerText: White
-        isCorrect: 0
-      - answerText: Green
-        isCorrect: 0
-      - answerText: Silver
-        isCorrect: 0
-      - answerText: Black
-        isCorrect: 1
-      - answerText: Transparent
-        isCorrect: 0
-    - questionText: Did it have a spoiler?
-      answers:
-      - answerText: Yes
-        isCorrect: 1
-      - answerText: No
-        isCorrect: 0
-    - questionText: You could see the sun in the picture?
-      answers:
-      - answerText: Yes
-        isCorrect: 0
-      - answerText: No
-        isCorrect: 1
-    - questionText: It was a new car?
-      answers:
-      - answerText: Yes
-        isCorrect: 1
-      - answerText: No
-        isCorrect: 0
-  - image: 2
-    name: Round 2
-    pointsAddedForCorrectAnswer: 30
-    questions:
-    - questionText: Picture is from World War II
-      answers:
-      - answerText: True
-        isCorrect: 1
-      - answerText: False
-        isCorrect: 0
-    - questionText: The tanks are from the US Army
-      answers:
-      - answerText: True
-        isCorrect: 0
-      - answerText: False
-        isCorrect: 1
-    - questionText: One of the tanks has a Mercedes emblem
-      answers:
-      - answerText: True
-        isCorrect: 0
-      - answerText: False
-        isCorrect: 1
-  - image: 3
-    name: Round 3
-    pointsAddedForCorrectAnswer: 15
-    questions:
-    - questionText: The bird's lower body is green
-      answers:
-      - answerText: True
-        isCorrect: 0
-      - answerText: False
-        isCorrect: 1
-    - questionText: You can see purple on it's body
-      answers:
-      - answerText: True
-        isCorrect: 1
-      - answerText: False
-        isCorrect: 0
-    - questionText: Was there was a small bug behind the bird?
-      answers:
-      - answerText: Yes
-        isCorrect: 0
-      - answerText: No
-        isCorrect: 1
-    - questionText: You can see more than 5 colors on the bird
-      answers:
-      - answerText: True
-        isCorrect: 1
-      - answerText: False
-        isCorrect: 0
 --- !u!4 &603415470
 Transform:
   m_ObjectHideFlags: 0
@@ -248,6 +155,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &603415471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 603415468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a5446e7f34e5640b63f4b888f8d4ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &603415472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 603415468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0173f1b26bdc61640993e2773c02be94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1733973879
 GameObject:
   m_ObjectHideFlags: 0
