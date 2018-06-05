@@ -188,13 +188,10 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene("Game");
 	}
 
-	public void RequestScoreBoardUpdate() {
-		scoreInstance.requestTopFiveScores();
-	}
-
-	public void InflateScoreBoard(int[] topScores) {
+	public void InflateScoreBoard() {
+		int[] topScores = dataController.getHighScores();
 		for(int i=0; i<topScores.Length; i++) {
-			topScoreTextFields[i].text = i + ". " + topScores[i];
+			topScoreTextFields[i].text = (i+1) + ". " + topScores[i];
 		}
 	}
 

@@ -11,10 +11,17 @@ public class DataController : MonoBehaviour {
 	private float score;
 	// public float Score { get; set; }
 	private RoundData[] allRoundData;
+	private Score scoreInstance;
+	private int[] highScores;
 	
 
 	public void finishRound(){
 		round++;
+		scoreInstance.requestTopFiveScores();
+	}
+
+	public void updateHighScoreList(int[] hsList) {
+		highScores = hsList;
 	}
 
 	public int getCurrentRound(){
@@ -37,6 +44,8 @@ public class DataController : MonoBehaviour {
 		LoadGameData();
 
 		SceneManager.LoadScene("MenuScreen");
+
+		scoreInstance = GetComponent<Score>();
 	}
 
 	public RoundData getCurrentRoundData(int round){
@@ -57,5 +66,9 @@ public class DataController : MonoBehaviour {
 		else {
 			Debug.LogError("Seems like you are missing some data :/ :?");
 		}
+	}
+
+	public int[] getHighScores() {
+		return highScores;
 	}
 }

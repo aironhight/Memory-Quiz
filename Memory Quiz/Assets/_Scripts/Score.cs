@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class Score : MonoBehaviour {
 	private DBManager db;
-	private GameController gameController;
-
+	private DataController DataController;
 
 	// Use this for initialization
 	void Start () {
 		db = GetComponent<DBManager>();
-		gameController = GetComponent<GameController>();
-		requestTopFiveScores(); // testing purposes.
-	}
-
-	private void Update() {
-		
+		DataController = GetComponent<DataController>();
 	}
 
 	//Starts an async task, posting the score to the database.
@@ -30,6 +24,6 @@ public class Score : MonoBehaviour {
 
 	//this method gets called automatically by the DBManager, sending a sorted array with the top 5 scores (decreasing value - index 0 is the top score)
 	public void inflateScoreBoard(int[] topScores) {
-		gameController.InflateScoreBoard(topScores);
+		DataController.updateHighScoreList(topScores);
 	}
 }
