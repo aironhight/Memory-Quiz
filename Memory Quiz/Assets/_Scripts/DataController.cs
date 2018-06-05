@@ -7,12 +7,14 @@ using UnityEngine.SceneManagement;
 public class DataController : MonoBehaviour {
 
 	private int round = 0;
-	private string dataFileName = "data.json";
+	// private string dataFileName = "data1.json";
 	private float score;
 	// public float Score { get; set; }
 	private RoundData[] allRoundData;
-	private Score scoreInstance;
+	public Score scoreInstance;
 	private int[] highScores;
+	private int allRounds;
+	private int num;
 	
 
 	public void finishRound(){
@@ -25,8 +27,10 @@ public class DataController : MonoBehaviour {
 	}
 
 	public int getCurrentRound(){
-		if (round > allRoundData.Length)
+		if (round >= allRoundData.Length)
+		{
 			round = -1;
+		}
 		return round;
 	}
 
@@ -41,6 +45,8 @@ public class DataController : MonoBehaviour {
 	void Start () {
 		DontDestroyOnLoad(gameObject);
 
+		resetRounds();
+
 		LoadGameData();
 
 		SceneManager.LoadScene("MenuScreen");
@@ -49,6 +55,7 @@ public class DataController : MonoBehaviour {
 	}
 
 	public RoundData getCurrentRoundData(int round){
+		Debug.Log("curr data: " + allRoundData.Length);
 		return allRoundData[round];
 	}
 
@@ -69,8 +76,8 @@ public class DataController : MonoBehaviour {
         
 
 		// For Andorid use the following code!
-
-		string path = Application.streamingAssetsPath + "/data.json";
+		int num = (int) Random.Range(1,4);
+		string path = Application.streamingAssetsPath + "/data" + num + ".json";
         WWW www = new WWW(path);
         while(!www.isDone) {}
         string json = www.text;
@@ -80,5 +87,14 @@ public class DataController : MonoBehaviour {
 
 	public int[] getHighScores() {
 		return highScores;
+	}
+
+	public void UploadScoreInstance(){
+		scoreInstance.postScore((int)score);
+	}
+
+	public void resetRounds(){
+		round = 0;
+		score = 0;
 	}
 }

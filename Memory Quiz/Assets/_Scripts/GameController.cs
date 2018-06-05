@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 
+	[SerializeField] public GameObject gameOverPanel;
 	[SerializeField] public GameObject roundOverPanel;
 	[SerializeField] public Text timeText;
 	[SerializeField] public GameObject questionPanel;
@@ -17,6 +18,8 @@ public class GameController : MonoBehaviour {
 	[SerializeField] public Text totalScore;
 	[SerializeField] private Image questionImage;
 	[SerializeField] public Text hint;
+	[SerializeField] public Text gameOverScoreText;
+	[SerializeField] public GameObject highScorePanel;
 	[SerializeField] public Text[] topScoreTextFields = new Text[5];
 	private float imageDisplayTime;
 	private DataController dataController;
@@ -42,23 +45,27 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		dataController = FindObjectOfType<DataController>();
 		round = dataController.getCurrentRound();
+
+		if(round == -1)
+		{
+			EndGame();
+			return;
+		}
+
 		currRound = dataController.getCurrentRoundData(round);
 		image = currRound.image;
 		questions = currRound.questions;
 		buttons = new List<GameObject>();
-		scoreInstance = GetComponent<Score>();
+		scoreInstance = dataController.scoreInstance;
 
-		if(round == -1)
-		{
-			Debug.Log("no next round");
-		}
+	
 
 		if(questionImage != null)
 		{
 			questionImage.sprite = Resources.Load<Sprite>("Images/" + image);
 		}
 
-		imageDisplayTime = 10.0f;
+		imageDisplayTime = 9.9f;
 		score = 0;
 		startTime = 0;
 		timeElapsed = 0;
@@ -69,6 +76,9 @@ public class GameController : MonoBehaviour {
 		isInRound = false;
 
 		ShowImage();
+
+		highScorePanel.SetActive(false);
+		gameOverPanel.SetActive(false);
 	}
 	
 	
@@ -92,11 +102,13 @@ public class GameController : MonoBehaviour {
 		{
 			timeElapsed = Time.time - startTime;
 			timeText.text = "Time passed:" + timeElapsed.ToString("0.0");
+			scoreText.text = "Score: " + score;
 		}
 
 		if(showImage)
 		{
 			ShowImage();
+			scoreText.text = "Score: " + dataController.getTotalScore();
 		}
 	}
 
@@ -147,8 +159,6 @@ public class GameController : MonoBehaviour {
 	private float timeScore() {
 		int timePassed = (int)timeElapsed;
 
-		Debug.Log(timePassed.ToString());
-
 		if(timePassed < 5)
 			return 100.0f;
 		else if(timePassed < 8)
@@ -159,18 +169,14 @@ public class GameController : MonoBehaviour {
 			return 10.0f;
 		return 0f;
 	}
-	public void EndRound() {
+	void EndRound() {
 		float tScore = timeScore();
 		isInRound = false;
 		totalRoundScore = score + tScore;
 
-		Debug.Log(totalRoundScore.ToString("0.0"));
-
 		dataController.addScore(totalRoundScore);
 		questionPanel.SetActive(false);
 		roundOverPanel.SetActive(true);
-
-		Debug.Log(dataController.getTotalScore());
 
 		totalScore.text = "Total Score: " + dataController.getTotalScore();
 	}
@@ -179,8 +185,8 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene("MenuScreen");
 	}
 
-	public void UploadScore() {
-		scoreInstance.postScore((int)score);
+	private void UploadScore() {
+		dataController.UploadScoreInstance();
 	}
 
 	public void NextRound() {
@@ -193,6 +199,26 @@ public class GameController : MonoBehaviour {
 		for(int i=0; i<topScores.Length; i++) {
 			topScoreTextFields[i].text = (i+1) + ". " + topScores[i];
 		}
+	}
+
+	public void EndGame(){
+	
+		questionPanel.SetActive(false);
+		roundOverPanel.SetActive(false);
+
+		gameOverPanel.SetActive(true);
+		gameOverScoreText.text = "Total Score: " + dataController.getTotalScore().ToString();
+		UploadScore();
+		dataController.resetRounds();
+	}
+
+	public void ShowHighScores(){
+		questionPanel.SetActive(false);
+		roundOverPanel.SetActive(false);
+		gameOverPanel.SetActive(false);
+
+		highScorePanel.SetActive(true);
+		InflateScoreBoard();
 	}
 
 }
