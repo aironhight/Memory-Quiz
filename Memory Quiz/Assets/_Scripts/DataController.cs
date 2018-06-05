@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DataController : MonoBehaviour {
 
 	private int round = 0;
+	private string dataFileName = "data.json";
 	private float score;
 	// public float Score { get; set; }
-	public RoundData[] allRoundData;
+	private RoundData[] allRoundData;
 	
 
 	public void finishRound(){
@@ -32,6 +34,8 @@ public class DataController : MonoBehaviour {
 	void Start () {
 		DontDestroyOnLoad(gameObject);
 
+		LoadGameData();
+
 		SceneManager.LoadScene("MenuScreen");
 	}
 
@@ -39,7 +43,19 @@ public class DataController : MonoBehaviour {
 		return allRoundData[round];
 	}
 
-	void Update () {
-		
+	private void LoadGameData(){
+		string filePath = Path.Combine(Application.streamingAssetsPath, dataFileName);
+
+		if(File.Exists(filePath))
+		{
+			string jsonData = File.ReadAllText(filePath);
+
+			GameData data = JsonUtility.FromJson<GameData>(jsonData);
+
+			allRoundData = data.allRoundData;
+		}
+		else {
+			Debug.LogError("Seems like you are missing some data :/ :?");
+		}
 	}
 }
