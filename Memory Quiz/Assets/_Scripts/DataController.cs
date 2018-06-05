@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+//using System.IO;
 
 public class DataController : MonoBehaviour {
 
@@ -53,8 +53,8 @@ public class DataController : MonoBehaviour {
 	}
 
 	private void LoadGameData(){
+		/* // For windows use the following:
 		string filePath = Path.Combine(Application.streamingAssetsPath, dataFileName);
-
 		if(File.Exists(filePath))
 		{
 			string jsonData = File.ReadAllText(filePath);
@@ -65,7 +65,17 @@ public class DataController : MonoBehaviour {
 		}
 		else {
 			Debug.LogError("Seems like you are missing some data :/ :?");
-		}
+		}*/
+        
+
+		// For Andorid use the following code!
+
+		string path = Application.streamingAssetsPath + "/data.json";
+        WWW www = new WWW(path);
+        while(!www.isDone) {}
+        string json = www.text;
+        GameData data = JsonUtility.FromJson<GameData> (json); 
+        allRoundData = data.allRoundData;
 	}
 
 	public int[] getHighScores() {
