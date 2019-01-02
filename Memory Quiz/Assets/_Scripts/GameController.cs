@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
 	[SerializeField] public SimpleObjectPool buttonPool;
 	[SerializeField] public Transform answerButtonParent;
 	[SerializeField] public Text totalScore;
+	[SerializeField] public Image questionImage;
 	private DataController dataController;
 	private RoundData currRound;
 	private float startTime;
@@ -30,12 +31,20 @@ public class GameController : MonoBehaviour {
 	private float total;
 
 	// Use this for initialization
+
+	void Awake(){
+		questionImage = GetComponent<Image>();
+	}
 	void Start () {
 		dataController = FindObjectOfType<DataController>();
 		currRound = dataController.getCurrentRoundData();
 		questions = currRound.questions;
 		buttons = new List<GameObject>();
 		imgPos = GetComponent<Image>();
+		
+		if(questionImage != null){
+			questionImage.sprite = Resources.Load<Sprite>("images/1");
+		}
 
 		score = 0;
 		startTime = Time.time;
