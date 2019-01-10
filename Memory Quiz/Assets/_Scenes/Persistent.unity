@@ -122,6 +122,8 @@ GameObject:
   m_Component:
   - component: {fileID: 603415470}
   - component: {fileID: 603415469}
+  - component: {fileID: 603415472}
+  - component: {fileID: 603415471}
   m_Layer: 0
   m_Name: DataController
   m_TagString: Untagged
@@ -140,55 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7a32e37373c02408ecd53d9b78036f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allRoundData:
-  - name: Round 1
-    pointsAddedForCorrectAnswer: 15
-    questions:
-    - questionImage: {fileID: 1473107732}
-      questionText: Who is this?
-      answers:
-      - answerText: You
-        isCorrect: 0
-      - answerText: Me
-        isCorrect: 0
-      - answerText: I don't know
-        isCorrect: 1
-      - answerText: No one
-        isCorrect: 1
-    - questionImage: {fileID: 1473107732}
-      questionText: Do you like SEP?
-      answers:
-      - answerText: No
-        isCorrect: 1
-      - answerText: ofc No
-        isCorrect: 1
-    - questionImage: {fileID: 1473107732}
-      questionText: Are you enjoying your life?
-      answers:
-      - answerText: yes
-        isCorrect: 0
-      - answerText: no
-        isCorrect: 1
-      - answerText: I don't know
-        isCorrect: 0
-    - questionImage: {fileID: 1473107732}
-      questionText: The images still not working?
-      answers:
-      - answerText: no
-        isCorrect: 1
-      - answerText: no
-        isCorrect: 1
-    - questionImage: {fileID: 1473107732}
-      questionText: Testing
-      answers:
-      - answerText: Yes
-        isCorrect: 1
-      - answerText: W/e
-        isCorrect: 1
-      - answerText: kurwa
-        isCorrect: 1
-      - answerText: No one
-        isCorrect: 1
 --- !u!4 &603415470
 Transform:
   m_ObjectHideFlags: 0
@@ -202,74 +155,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1473107731
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1473107734}
-  - component: {fileID: 1473107733}
-  - component: {fileID: 1473107732}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1473107732
+--- !u!114 &603415471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1473107731}
+  m_GameObject: {fileID: 603415468}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: d4a5446e7f34e5640b63f4b888f8d4ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 0e1b33a770c3c104996fdaf14580b5a8, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1473107733
-CanvasRenderer:
+--- !u!114 &603415472
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1473107731}
---- !u!224 &1473107734
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1473107731}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 264, y: 333.5}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_GameObject: {fileID: 603415468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0173f1b26bdc61640993e2773c02be94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1733973879
 GameObject:
   m_ObjectHideFlags: 0

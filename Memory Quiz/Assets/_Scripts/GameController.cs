@@ -7,65 +7,132 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 
-	[SerializeField] public GameObject GameOverPanel;
-	[SerializeField] public GameObject ImagePanel;
+	[SerializeField] public GameObject gameOverPanel;
+	[SerializeField] public GameObject roundOverPanel;
 	[SerializeField] public Text timeText;
 	[SerializeField] public GameObject questionPanel;
 	[SerializeField] public Text questionText;
 	[SerializeField] public Text scoreText;
-	[SerializeField] public Image imgPos;
 	[SerializeField] public SimpleObjectPool buttonPool;
 	[SerializeField] public Transform answerButtonParent;
 	[SerializeField] public Text totalScore;
+<<<<<<< HEAD
 	[SerializeField] public Image questionImage;
+=======
+	[SerializeField] private Image questionImage;
+	[SerializeField] public Text hint;
+	[SerializeField] public Text gameOverScoreText;
+	[SerializeField] public GameObject highScorePanel;
+	[SerializeField] public Text[] topScoreTextFields = new Text[5];
+	private float imageDisplayTime;
+>>>>>>> 7828181ea859ed53a0cfeadb6b59cf846a6b02d8
 	private DataController dataController;
 	private RoundData currRound;
 	private float startTime;
 	private QuestionData[] questions;
-	private int score;
+	private int image;
+	private float score;
 	private bool isInRound;
 	private float timeElapsed;
 	private int questionIndx;
 	private Image img;
 	private List<GameObject> buttons;
-	private float total;
+	private float totalRoundScore;
+	private bool showImage;
+	private int round;
+	private Score scoreInstance;
 
+	void Awake(){
+		
+	}
+
+<<<<<<< HEAD
 	// Use this for initialization
 
 	void Awake(){
 		questionImage = GetComponent<Image>();
 	}
+=======
+>>>>>>> 7828181ea859ed53a0cfeadb6b59cf846a6b02d8
 	void Start () {
 		dataController = FindObjectOfType<DataController>();
-		currRound = dataController.getCurrentRoundData();
+		round = dataController.getCurrentRound();
+
+		if(round == -1)
+		{
+			EndGame();
+			return;
+		}
+
+		currRound = dataController.getCurrentRoundData(round);
+		image = currRound.image;
 		questions = currRound.questions;
 		buttons = new List<GameObject>();
+<<<<<<< HEAD
 		imgPos = GetComponent<Image>();
 		
 		if(questionImage != null){
 			questionImage.sprite = Resources.Load<Sprite>("images/1");
 		}
+=======
+		scoreInstance = dataController.scoreInstance;
+>>>>>>> 7828181ea859ed53a0cfeadb6b59cf846a6b02d8
 
+	
+
+		if(questionImage != null)
+		{
+			questionImage.sprite = Resources.Load<Sprite>("Images/" + image);
+		}
+
+		imageDisplayTime = 9.9f;
 		score = 0;
-		startTime = Time.time;
+		startTime = 0;
 		timeElapsed = 0;
 		questionIndx = 0;
-		total = 0;
+		totalRoundScore = 0;
 
-		SetupQuestion();
-		isInRound = true;
+		showImage = true;
+		isInRound = false;
+
+		ShowImage();
+
+		highScorePanel.SetActive(false);
+		gameOverPanel.SetActive(false);
 	}
 	
-	// Update is called once per frame
+	
+	private void ShowImage() {
+		imageDisplayTime -= Time.deltaTime;
+		timeText.text = "Time left: " + imageDisplayTime.ToString("0.0");
+		if(imageDisplayTime < 0)
+		{
+			hint.enabled = false;
+			showImage = false;
+			questionImage.enabled = false;
+			SetupQuestion();
+			isInRound = true;
+			startTime = Time.time;
+		}
+		
+	}
+
 	void Update () {
 		if(isInRound)
 		{
 			timeElapsed = Time.time - startTime;
-			timeText.text = timeElapsed.ToString("0.0");
+			timeText.text = "Time passed:" + timeElapsed.ToString("0.0");
+			scoreText.text = "Score: " + score;
+		}
+
+		if(showImage)
+		{
+			ShowImage();
+			scoreText.text = "Score: " + dataController.getTotalScore();
 		}
 	}
 
-	private void ClearAnswers(){
+	private void ClearAnswers() {
 		while(buttons.Count > 0)
 		{
 			buttonPool.ReturnObject(buttons[0]);
@@ -74,13 +141,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-
-	// private void SetupImage(){
-	// 	QuestionData qData = questions[questionIndx];
-	// 	imgPos.GetComponent<Renderer>().overrideSprite = img;
-	// }
-
-	private void SetupQuestion(){
+	private void SetupQuestion() {
 		ClearAnswers();
 
 		QuestionData qData = questions[questionIndx];
@@ -96,7 +157,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	public void Answer(bool isCorrect){
+	public void Answer(bool isCorrect) {
 		if(isCorrect)
 		{
 			score += currRound.pointsAddedForCorrectAnswer;
@@ -115,15 +176,69 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	public void EndRound(){
+	private float timeScore() {
+		int timePassed = (int)timeElapsed;
+
+		if(timePassed < 5)
+			return 100.0f;
+		else if(timePassed < 8)
+			return 60.0f;
+		else if(timePassed < 15)
+			return 30.0f;
+		else if(timePassed < 30)
+			return 10.0f;
+		return 0f;
+	}
+	void EndRound() {
+		float tScore = timeScore();
 		isInRound = false;
-		total = score - (timeElapsed / 10);
+		totalRoundScore = score + tScore;
+
+		dataController.addScore(totalRoundScore);
 		questionPanel.SetActive(false);
-		GameOverPanel.SetActive(true);
-		totalScore.text = "Total Score: " + total.ToString("0.0");
+		roundOverPanel.SetActive(true);
+
+		totalScore.text = "Total Score: " + dataController.getTotalScore();
 	}
 
-	public void ReturnToMenu(){
+	public void ReturnToMenu() {
 		SceneManager.LoadScene("MenuScreen");
 	}
+
+	private void UploadScore() {
+		dataController.UploadScoreInstance();
+	}
+
+	public void NextRound() {
+		dataController.finishRound();
+		SceneManager.LoadScene("Game");
+	}
+
+	public void InflateScoreBoard() {
+		int[] topScores = dataController.getHighScores();
+		for(int i=0; i<topScores.Length; i++) {
+			topScoreTextFields[i].text = (i+1) + ". " + topScores[i];
+		}
+	}
+
+	public void EndGame(){
+	
+		questionPanel.SetActive(false);
+		roundOverPanel.SetActive(false);
+
+		gameOverPanel.SetActive(true);
+		gameOverScoreText.text = "Total Score: " + dataController.getTotalScore().ToString();
+		UploadScore();
+		dataController.resetRounds();
+	}
+
+	public void ShowHighScores(){
+		questionPanel.SetActive(false);
+		roundOverPanel.SetActive(false);
+		gameOverPanel.SetActive(false);
+
+		highScorePanel.SetActive(true);
+		InflateScoreBoard();
+	}
+
 }
