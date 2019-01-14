@@ -7,13 +7,13 @@ public class AnswerButton : MonoBehaviour {
 
 	[SerializeField]
 	public Text answerText;
-	private AnswerData answerData;
+	private Answers answerData;
 	private GameController gameController;
 	void Start () {
 		gameController = FindObjectOfType<GameController>();
 	}
 
-	public void Setup(AnswerData data){
+	public void Setup(Answers data){
 		answerData = data;
 		answerText.text = answerData.answerText;
 	}

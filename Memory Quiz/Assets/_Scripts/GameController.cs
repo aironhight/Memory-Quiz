@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 
@@ -13,19 +12,19 @@ public class GameController : MonoBehaviour {
 	[SerializeField] public GameObject questionPanel;
 	[SerializeField] public Text questionText;
 	[SerializeField] public Text scoreText;
-	[SerializeField] public SimpleObjectPool buttonPool;
+	[SerializeField] public GameObject buttonPrefab;
 	[SerializeField] public Transform answerButtonParent;
 	[SerializeField] public Text totalScore;
 	[SerializeField] private Image questionImage;
-	[SerializeField] public Text hint;
 	[SerializeField] public Text gameOverScoreText;
 	[SerializeField] public GameObject highScorePanel;
-	[SerializeField] public Text[] topScoreTextFields = new Text[5];
+	// Old version 
+	// [SerializeField] public Text[] topScoreTextFields = new Text[5];
 	private float imageDisplayTime;
 	private DataController dataController;
 	private RoundData currRound;
 	private float startTime;
-	private QuestionData[] questions;
+	private Questions[] questions;
 	private int image;
 	private float score;
 	private bool isInRound;
@@ -87,7 +86,6 @@ public class GameController : MonoBehaviour {
 		timeText.text = "Time left: " + imageDisplayTime.ToString("0.0");
 		if(imageDisplayTime < 0)
 		{
-			hint.enabled = false;
 			showImage = false;
 			questionImage.enabled = false;
 			SetupQuestion();
@@ -112,27 +110,37 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	public void DeleteGameObject(GameObject toDelete) 
+	{
+			Debug.Log(toDelete.name + " - Destroying.");
+			Destroy(toDelete);
+	}
+
 	private void ClearAnswers() {
 		while(buttons.Count > 0)
 		{
-			buttonPool.ReturnObject(buttons[0]);
+			// No longer using OP
+			// buttonPool.ReturnObject(buttons[0]);
 
+			DeleteGameObject(buttons[0]);
 			buttons.RemoveAt(0);
 		}
+
+
 	}
 
 	private void SetupQuestion() {
 		ClearAnswers();
 
-		QuestionData qData = questions[questionIndx];
+		Questions qData = questions[questionIndx];
 		questionText.text = qData.questionText;
 
 		for (int i = 0; i < qData.answers.Length; i++)
 		{
-			GameObject answerButtonGO = buttonPool.GetObject();
-			buttons.Add(answerButtonGO);
-			answerButtonGO.transform.SetParent(answerButtonParent);
-			AnswerButton answerButton = answerButtonGO.GetComponent<AnswerButton>();
+			GameObject newAnswerButtonGO = (GameObject)GameObject.Instantiate(buttonPrefab);
+			buttons.Add(newAnswerButtonGO);
+			newAnswerButtonGO.transform.SetParent(answerButtonParent);
+			AnswerButton answerButton = newAnswerButtonGO.GetComponent<AnswerButton>();
 			answerButton.Setup(qData.answers[i]);
 		}
 	}
@@ -183,6 +191,7 @@ public class GameController : MonoBehaviour {
 
 	public void ReturnToMenu() {
 		SceneManager.LoadScene("MenuScreen");
+		dataController.ResetRounds();
 	}
 
 	private void UploadScore() {
@@ -194,12 +203,12 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene("Game");
 	}
 
-	public void InflateScoreBoard() {
-		int[] topScores = dataController.getHighScores();
-		for(int i=0; i<topScores.Length; i++) {
-			topScoreTextFields[i].text = (i+1) + ". " + topScores[i];
-		}
-	}
+	// public void InflateScoreBoard() {
+	// 	int[] topScores = dataController.getHighScores();
+	// 	for(int i=0; i<topScores.Length; i++) {
+	// 		topScoreTextFields[i].text = (i+1) + ". " + topScores[i];
+	// 	}
+	// }
 
 	public void EndGame(){
 	
@@ -209,16 +218,17 @@ public class GameController : MonoBehaviour {
 		gameOverPanel.SetActive(true);
 		gameOverScoreText.text = "Total Score: " + dataController.getTotalScore().ToString();
 		UploadScore();
-		dataController.resetRounds();
+		dataController.ResetRounds();
 	}
 
 	public void ShowHighScores(){
-		questionPanel.SetActive(false);
-		roundOverPanel.SetActive(false);
-		gameOverPanel.SetActive(false);
+		// questionPanel.SetActive(false);
+		// roundOverPanel.SetActive(false);
+		// gameOverPanel.SetActive(false);
 
-		highScorePanel.SetActive(true);
-		InflateScoreBoard();
+		// highScorePanel.SetActive(true);
+		// InflateScoreBoard();
+		SceneManager.LoadScene("Highscores");
 	}
 
 }

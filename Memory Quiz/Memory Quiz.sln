@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memory Quiz", "Assembly-CSharp.csproj", "{856477BB-921D-A425-EE0B-458F59FA0532}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{856477BB-921D-A425-EE0B-458F59FA0532}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memory Quiz", "Assembly-CSharp-Editor.csproj", "{38E7A6B6-F164-0636-0769-2992D015C618}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{38E7A6B6-F164-0636-0769-2992D015C618}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

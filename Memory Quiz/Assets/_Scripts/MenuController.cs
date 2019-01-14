@@ -5,13 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour {
 
+	private DataController dataController;
+	void Start () {
+		dataController = FindObjectOfType<DataController>();
+	}
+
 	public void StartGame(){
-		SceneManager.LoadScene("Game");
+		SceneManager.LoadScene("SelectAudience");
 	}
 
 	public void ShowHighScores(){
-		// to be done
+		SceneManager.LoadScene("Highscores");
 	}
+
+	public void HowToPlay(){
+		SceneManager.LoadScene("HowToPlay");
+	}
+	
 	public void ExitGame(){
 		Application.Quit();
 	}
