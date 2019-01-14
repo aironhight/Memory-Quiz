@@ -15,12 +15,16 @@ public class GameController : MonoBehaviour {
 	[SerializeField] public GameObject buttonPrefab;
 	[SerializeField] public Transform answerButtonParent;
 	[SerializeField] public Text totalScore;
+<<<<<<< HEAD
+	[SerializeField] public Image questionImage;
+=======
 	[SerializeField] private Image questionImage;
 	[SerializeField] public Text gameOverScoreText;
 	[SerializeField] public GameObject highScorePanel;
 	// Old version 
 	// [SerializeField] public Text[] topScoreTextFields = new Text[5];
 	private float imageDisplayTime;
+>>>>>>> 7828181ea859ed53a0cfeadb6b59cf846a6b02d8
 	private DataController dataController;
 	private RoundData currRound;
 	private float startTime;
@@ -41,6 +45,14 @@ public class GameController : MonoBehaviour {
 		
 	}
 
+<<<<<<< HEAD
+	// Use this for initialization
+
+	void Awake(){
+		questionImage = GetComponent<Image>();
+	}
+=======
+>>>>>>> 7828181ea859ed53a0cfeadb6b59cf846a6b02d8
 	void Start () {
 		dataController = FindObjectOfType<DataController>();
 		round = dataController.getCurrentRound();
@@ -55,7 +67,15 @@ public class GameController : MonoBehaviour {
 		image = currRound.image;
 		questions = currRound.questions;
 		buttons = new List<GameObject>();
+<<<<<<< HEAD
+		imgPos = GetComponent<Image>();
+		
+		if(questionImage != null){
+			questionImage.sprite = Resources.Load<Sprite>("images/1");
+		}
+=======
 		scoreInstance = dataController.scoreInstance;
+>>>>>>> 7828181ea859ed53a0cfeadb6b59cf846a6b02d8
 
 	
 
